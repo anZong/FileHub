@@ -213,16 +213,18 @@ export function VideoProcessor({ className }: VideoProcessorProps) {
                       onLoadedMetadata={handleLoadedMetadata}
                       onEnded={() => setIsPlaying(false)}
                       onClick={togglePlay}
+                      aria-label="视频预览播放器"
                     />
                   )}
                   <button
-                    className="absolute inset-0 flex items-center justify-center bg-foreground/20 opacity-0 hover:opacity-100 transition-opacity"
-                    onClick={togglePlay}>
+                    className="absolute inset-0 flex items-center justify-center bg-foreground/20 opacity-0 hover:opacity-100 transition-opacity duration-200 motion-reduce:transition-none cursor-pointer"
+                    onClick={togglePlay}
+                    aria-label={isPlaying ? "暂停视频" : "播放视频"}>
                     <div className="w-16 h-16 rounded-full bg-video flex items-center justify-center">
                       {isPlaying ? (
-                        <Pause className="w-8 h-8 text-primary-foreground" />
+                        <Pause className="w-8 h-8 text-primary-foreground" aria-hidden="true" />
                       ) : (
-                        <Play className="w-8 h-8 text-primary-foreground ml-1" />
+                        <Play className="w-8 h-8 text-primary-foreground ml-1" aria-hidden="true" />
                       )}
                     </div>
                   </button>
@@ -230,25 +232,30 @@ export function VideoProcessor({ className }: VideoProcessorProps) {
 
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <Button variant="video" size="icon" onClick={togglePlay}>
+                    <Button 
+                      variant="video" 
+                      size="icon" 
+                      onClick={togglePlay}
+                      aria-label={isPlaying ? "暂停播放" : "开始播放"}>
                       {isPlaying ? (
-                        <Pause className="w-4 h-4" />
+                        <Pause className="w-4 h-4" aria-hidden="true" />
                       ) : (
-                        <Play className="w-4 h-4" />
+                        <Play className="w-4 h-4" aria-hidden="true" />
                       )}
                     </Button>
                     <div className="flex-1">
                       <Progress
                         value={duration ? (currentTime / duration) * 100 : 0}
                         variant="video"
+                        aria-label={`播放进度 ${Math.round(duration ? (currentTime / duration) * 100 : 0)}%`}
                       />
                     </div>
-                    <span className="text-sm text-muted-foreground min-w-[80px] text-right">
+                    <span className="text-sm text-muted-foreground min-w-[80px] text-right" aria-live="polite">
                       {formatTime(currentTime)} / {formatTime(duration)}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Video className="w-4 h-4" />
+                    <Video className="w-4 h-4" aria-hidden="true" />
                     <span className="truncate">{selectedFile.name}</span>
                     <span>•</span>
                     <span>{formatFileSize(selectedFile.size)}</span>
@@ -258,8 +265,9 @@ export function VideoProcessor({ className }: VideoProcessorProps) {
                 <Button
                   variant="outline"
                   onClick={reset}
-                  className="w-full gap-2">
-                  <RefreshCw className="w-4 h-4" />
+                  className="w-full gap-2"
+                  aria-label="重新选择视频文件">
+                  <RefreshCw className="w-4 h-4" aria-hidden="true" />
                   重新选择
                 </Button>
               </div>
@@ -344,15 +352,17 @@ export function VideoProcessor({ className }: VideoProcessorProps) {
                   variant="video"
                   onClick={convertVideo}
                   disabled={!selectedFile || processing}
-                  className="flex-1 gap-2">
+                  className="flex-1 gap-2"
+                  aria-label={processing ? "正在转换视频" : "开始转换视频"}>
                   {processing ? "转换中..." : "开始转换"}
                 </Button>
                 <Button
                   variant="outline"
                   onClick={downloadVideo}
                   disabled={!selectedFile || processing}
-                  className="gap-2">
-                  <Download className="w-4 h-4" />
+                  className="gap-2"
+                  aria-label="下载转换后的视频">
+                  <Download className="w-4 h-4" aria-hidden="true" />
                   下载
                 </Button>
               </div>

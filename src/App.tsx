@@ -65,16 +65,19 @@ const features = [
     icon: Sparkles,
     title: "智能识别",
     description: "自动识别文件类型，智能推荐处理方案",
+    ariaLabel: "智能识别功能",
   },
   {
     icon: Zap,
     title: "快速处理",
     description: "本地处理，无需上传服务器，快速高效",
+    ariaLabel: "快速处理功能",
   },
   {
     icon: Shield,
     title: "安全隐私",
     description: "文件不上传云端，保护您的隐私安全",
+    ariaLabel: "安全隐私功能",
   },
 ];
 
@@ -160,10 +163,12 @@ function HomePage() {
         {features.map((feature, index) => (
           <Card
             key={index}
-            className="text-center p-6 hover:shadow-lg transition-all">
+            className="text-center p-6 hover:shadow-lg transition-all duration-200 motion-reduce:transition-none"
+            role="article"
+            aria-label={feature.ariaLabel}>
             <CardContent className="pt-6 space-y-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-primary mx-auto flex items-center justify-center">
-                <feature.icon className="w-6 h-6 text-primary-foreground" />
+                <feature.icon className="w-6 h-6 text-primary-foreground" aria-hidden="true" />
               </div>
               <h3 className="text-lg font-semibold">{feature.title}</h3>
               <p className="text-sm text-muted-foreground">
@@ -186,11 +191,20 @@ function HomePage() {
             <Card
               key={module.id}
               className={cn(
-                "cursor-pointer transition-all duration-300 hover:shadow-xl",
+                "cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none",
                 module.borderColor,
                 module.hoverBg
               )}
-              onClick={() => navigate(module.path)}>
+              onClick={() => navigate(module.path)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  navigate(module.path);
+                }
+              }}
+              aria-label={`进入${module.title}`}>
               <CardContent className="p-6 space-y-4">
                 <div className="flex items-center gap-4">
                   <div
@@ -260,10 +274,11 @@ function AppLayout() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <button
-              className="flex items-center gap-2 font-bold text-xl"
-              onClick={() => navigate("/")}>
+              className="flex items-center gap-2 font-bold text-xl hover:opacity-80 transition-opacity"
+              onClick={() => navigate("/")}
+              aria-label="返回首页">
               <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-primary-foreground" />
+                <Sparkles className="w-4 h-4 text-primary-foreground" aria-hidden="true" />
               </div>
               <span className="text-gradient">FileHub</span>
             </button>

@@ -379,10 +379,10 @@ export function ImageProcessor({ className }: ImageProcessorProps) {
                       <button
                         key={color.value}
                         className={cn(
-                          "w-10 h-10 rounded-xl border-2 transition-all duration-200 shadow-sm",
+                          "w-10 h-10 rounded-xl border-2 transition-all duration-200 shadow-sm cursor-pointer motion-reduce:transition-none",
                           bgColor === color.value
-                            ? "border-image ring-2 ring-image/30 scale-110"
-                            : "border-border hover:border-image/50 hover:scale-105",
+                            ? "border-image ring-2 ring-image/30 scale-110 motion-reduce:scale-100"
+                            : "border-border hover:border-image/50 hover:scale-105 motion-reduce:hover:scale-100",
                           color.value === "transparent" &&
                           "bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHJlY3QgZmlsbD0iI2ZmZiIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIi8+PHJlY3QgZmlsbD0iI2NjYyIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIi8+PHJlY3QgZmlsbD0iI2NjYyIgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiLz48L3N2Zz4=')]"
                         )}
@@ -394,6 +394,7 @@ export function ImageProcessor({ className }: ImageProcessorProps) {
                         }}
                         onClick={() => setBgColor(color.value)}
                         title={color.label}
+                        aria-label={`选择${color.label}背景`}
                       />
                     ))}
                   </div>
@@ -454,15 +455,16 @@ export function ImageProcessor({ className }: ImageProcessorProps) {
                 <div className="relative aspect-square rounded-xl overflow-hidden bg-secondary/50 flex items-center justify-center">
                   <img
                     src={previewUrl}
-                    alt="Preview"
+                    alt="原始图片预览"
                     className="max-w-full max-h-full object-contain"
                   />
                 </div>
                 <Button
                   variant="outline"
                   onClick={reset}
-                  className="w-full gap-2">
-                  <RotateCcw className="w-4 h-4" />
+                  className="w-full gap-2"
+                  aria-label="重新选择图片">
+                  <RotateCcw className="w-4 h-4" aria-hidden="true" />
                   重新选择
                 </Button>
               </div>
@@ -480,7 +482,7 @@ export function ImageProcessor({ className }: ImageProcessorProps) {
                 {processedUrl ? (
                   <img
                     src={processedUrl}
-                    alt="Processed"
+                    alt="处理后的图片"
                     className="max-w-full max-h-full object-contain"
                   />
                 ) : (
@@ -504,15 +506,17 @@ export function ImageProcessor({ className }: ImageProcessorProps) {
                   variant="image"
                   onClick={processImage}
                   disabled={!selectedFile || processing}
-                  className="flex-1 gap-2">
+                  className="flex-1 gap-2"
+                  aria-label={processing ? "正在处理图片" : "开始处理图片"}>
                   {processing ? "处理中..." : "开始处理"}
                 </Button>
                 <Button
                   variant="outline"
                   onClick={downloadImage}
                   disabled={!processedUrl}
-                  className="gap-2">
-                  <Download className="w-4 h-4" />
+                  className="gap-2"
+                  aria-label="下载处理后的图片">
+                  <Download className="w-4 h-4" aria-hidden="true" />
                   下载
                 </Button>
               </div>

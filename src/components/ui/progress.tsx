@@ -23,10 +23,14 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           "relative h-2 w-full overflow-hidden rounded-full bg-secondary",
           className
         )}
+        role="progressbar"
+        aria-valuenow={Math.round(value)}
+        aria-valuemin={0}
+        aria-valuemax={100}
         {...props}>
         <div
           className={cn(
-            "h-full transition-all duration-500 ease-out rounded-full",
+            "h-full transition-all duration-500 ease-out rounded-full motion-reduce:transition-none",
             variantClasses[variant]
           )}
           style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
