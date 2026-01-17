@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 224 71% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 224 71% 4%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 243 75% 59%;
+    --radius: 0.75rem;
+
+    /* Module colors */
+    --image: 24 95% 53%;
+    --image-light: 24 100% 96%;
+    --audio: 142 71% 45%;
+    --audio-light: 142 76% 96%;
+    --video: 271 81% 56%;
+    --video-light: 271 91% 96%;
+    --document: 213 94% 50%;
+    --document-light: 213 100% 96%;
+    --archive: 45 93% 47%;
+    --archive-light: 45 100% 96%;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --card: 224 71% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 243 75% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 218 11% 65%;
+    --accent: 262 83% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --ring: 243 75% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--accent)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--accent)) 100%
+    );
+  }
+
+  .bg-gradient-hero {
+    background: linear-gradient(
+      135deg,
+      hsl(220 20% 97%) 0%,
+      hsl(240 20% 94%) 100%
+    );
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50;
+  }
+
+  .module-card {
+    @apply relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:shadow-xl cursor-pointer border border-border/50;
+    background: linear-gradient(
+      145deg,
+      hsl(var(--card)) 0%,
+      hsl(220 20% 98%) 100%
+    );
+  }
+
+  .module-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .upload-zone {
+    @apply border-2 border-dashed border-border rounded-2xl p-8 transition-all duration-300 flex flex-col items-center justify-center gap-4 cursor-pointer;
+    @apply hover:border-primary hover:bg-primary/5;
+  }
+
+  .upload-zone.active {
+    @apply border-primary bg-primary/10;
+  }
+
+  .feature-card {
+    @apply p-4 rounded-xl border border-border/50 bg-card transition-all duration-200;
+    @apply hover:border-primary/50 hover:shadow-md;
+  }
+
+  .processing-card {
+    @apply p-6 rounded-2xl border border-border bg-card shadow-sm;
+  }
+}
